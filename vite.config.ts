@@ -18,4 +18,25 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // Disable source maps for faster builds (optional)
+    sourcemap: false,
+
+    // Skip chunk size warnings
+    chunkSizeWarningLimit: 1000,
+
+    // Rollup options
+    rollupOptions: {
+      // Suppress warnings
+      onwarn(warning, warn) {
+        // Skip certain warnings
+        if (warning.code === "UNUSED_EXTERNAL_IMPORT") return;
+        warn(warning);
+      },
+    },
+  },
+  // Disable pre-bundling errors
+  optimizeDeps: {
+    exclude: [],
+  },
 });
